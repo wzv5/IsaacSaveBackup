@@ -39,6 +39,7 @@
             this.打开存档目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.打开备份目录ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.清空所有备份ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -96,7 +97,7 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(120, 23);
             this.button2.TabIndex = 4;
-            this.button2.Text = "恢复存档";
+            this.button2.Text = "还原存档";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
@@ -141,11 +142,21 @@
             this.清空所有备份ToolStripMenuItem.Text = "清空所有备份";
             this.清空所有备份ToolStripMenuItem.Click += new System.EventHandler(this.清空所有备份ToolStripMenuItem_Click);
             // 
+            // label2
+            // 
+            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.Location = new System.Drawing.Point(13, 297);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(247, 30);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "注意：如果在Steam同步期间进行还原，可能会失败，此时只要再还原一次即可。";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 310);
+            this.ClientSize = new System.Drawing.Size(272, 338);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.listBox1);
@@ -178,6 +189,7 @@
         private System.Windows.Forms.ToolStripMenuItem 打开存档目录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 打开备份目录ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 清空所有备份ToolStripMenuItem;
+        private System.Windows.Forms.Label label2;
     }
 }
 

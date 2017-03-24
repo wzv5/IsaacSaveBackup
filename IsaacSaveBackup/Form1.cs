@@ -1,17 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
 using System.IO;
 using System.Text.RegularExpressions;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Threading;
 
 namespace IsaacSaveBackup
@@ -108,9 +100,6 @@ namespace IsaacSaveBackup
             onFileChanged();
         }
 
-        [DllImport("user32.dll")]
-        public static extern bool FlashWindow(IntPtr hWnd, bool bInvert);
-
         private void onFileChanged()
         {
             Thread.Sleep(1000); // 延迟1秒执行，避免文件占用
@@ -129,7 +118,6 @@ namespace IsaacSaveBackup
             File.Copy(Path.Combine(Directory.GetParent(source).FullName, "remotecache.vdf"), Path.Combine(dist, "remotecache.vdf"));
             _lastsave = dist;
             listBox1.Items.Add(new ListBoxItem(string.Format("[{0}] 存档备份已创建", now), dist));
-            FlashWindow(this.Handle, true);
         }
 
         private void fileSystemWatcher1_Deleted(object sender, FileSystemEventArgs e)
@@ -137,7 +125,7 @@ namespace IsaacSaveBackup
             if (string.IsNullOrEmpty(_lastsave))
                 return;
 
-            var ret = MessageBox.Show("角色已死亡，是否还原到最近一次的备份？（这将自动关闭游戏）", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var ret = MessageBox.Show("角色已死亡，是否还原到最近一次的备份？（这将自动关闭游戏）", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button1, MessageBoxOptions.ServiceNotification);
             if (ret == DialogResult.Yes)
             {
                 restoresave(_lastsave);
