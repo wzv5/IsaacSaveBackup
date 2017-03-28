@@ -16,4 +16,4 @@
 
 <https://raw.githubusercontent.com/wzv5/IsaacSaveBackup/master/IsaacSaveBackup/bin/Release/IsaacSaveBackup.exe>
 
-![screenshot](https://raw.githubusercontent.com/wzv5/IsaacSaveBackup/master/IsaacSaveBackup/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/wzv5/IsaacSaveBackup/master/screenshot.png)
