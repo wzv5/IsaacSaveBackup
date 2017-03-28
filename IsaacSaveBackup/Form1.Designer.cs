@@ -147,15 +147,15 @@
             this.label2.ForeColor = System.Drawing.Color.Red;
             this.label2.Location = new System.Drawing.Point(13, 297);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(247, 30);
+            this.label2.Size = new System.Drawing.Size(247, 52);
             this.label2.TabIndex = 7;
-            this.label2.Text = "注意：如果在Steam同步期间进行还原，可能会失败，此时只要再还原一次即可。";
+            this.label2.Text = "注意：如果在Steam同步期间进行还原，可能会失败，此时只要再还原一次即可。\r\n\r\n推荐关闭Steam同步！";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(272, 338);
+            this.ClientSize = new System.Drawing.Size(272, 358);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
