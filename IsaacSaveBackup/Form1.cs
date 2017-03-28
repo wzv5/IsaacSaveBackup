@@ -146,11 +146,7 @@ namespace IsaacSaveBackup
             }
             File.Copy(Path.Combine(dist, "remotecache.vdf"), Path.Combine(Directory.GetParent(fileSystemWatcher1.Path).FullName, "remotecache.vdf"), true);
             fileSystemWatcher1.EnableRaisingEvents = true;
-            var ret = MessageBox.Show("已还原存档，是否启动游戏？", "询问", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (ret == DialogResult.Yes)
-            {
-                Process.Start("steam://rungameid/250900");
-            }
+            Process.Start("steam://rungameid/250900");
         }
 
         private void button1_Click(object sender, EventArgs e)
