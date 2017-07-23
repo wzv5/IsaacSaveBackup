@@ -54,27 +54,28 @@ namespace IsaacSaveBackup
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            var key = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Valve\\Steam");
-            if (key == null)
+            _steampath = Registry.CurrentUser.OpenSubKey("SOFTWARE\\Valve\\Steam")?.GetValue("SteamPath") as string;
+            if (_steampath == null || !Directory.Exists(_steampath))
             {
                 MessageBox.Show("没有安装 Steam", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Close();
             }
-            _steampath = key.GetValue("SteamPath") as string;
-            foreach (var i in key.OpenSubKey("Users").GetSubKeyNames())
+
+            foreach (var i in Directory.EnumerateDirectories(Path.Combine(_steampath, "userdata")))
             {
-                var p = Path.Combine(_steampath, "userdata", i, "config", "localconfig.vdf");
-                if (File.Exists(p))
+                var uid = Path.GetFileName(i);
+                if (Directory.Exists(Path.Combine(_steampath, "userdata", uid, "250900")))
                 {
-                    var m = Regex.Match(File.ReadAllText(p), "\"PersonaName\"\t\t\"(.+)\"");
-                    var name = m.Groups[1].Value;
-                    if (Directory.Exists(Path.Combine(_steampath, "userdata", i, "250900")))
+                    var p = Path.Combine(_steampath, "userdata", uid, "config", "localconfig.vdf");
+                    if (File.Exists(p))
                     {
-                        var index= comboBox1.Items.Add(new ComboBoxItem(name, i));
+                        var m = Regex.Match(File.ReadAllText(p), "\"PersonaName\"\t\t\"(.+)\"");
+                        var name = m.Groups[1].Value;
+                        var index = comboBox1.Items.Add(new ComboBoxItem(name, uid));
                     }
                 }
-
             }
+
             if (comboBox1.Items.Count == 0)
             {
                 MessageBox.Show("没有找到以撒存档目录，请先安装游戏，并至少运行一次。", "错误", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -116,6 +117,8 @@ namespace IsaacSaveBackup
                 File.Copy(i, Path.Combine(dist, "remote", Path.GetFileName(i)));
             }
             File.Copy(Path.Combine(Directory.GetParent(source).FullName, "remotecache.vdf"), Path.Combine(dist, "remotecache.vdf"));
+            File.Copy(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Binding of Isaac Afterbirth+", string.Format("{0}.abp_persistentgamedata1.dat", DateTime.Now.ToString("yyyyMMdd"))), 
+                Path.Combine(dist, "MyDocuments.dat"));
             _lastsave = dist;
             listBox1.Items.Add(new ListBoxItem(string.Format("[{0}] 存档备份已创建", now), dist));
         }
@@ -145,6 +148,8 @@ namespace IsaacSaveBackup
                 File.Copy(i, Path.Combine(fileSystemWatcher1.Path, Path.GetFileName(i)), true);
             }
             File.Copy(Path.Combine(dist, "remotecache.vdf"), Path.Combine(Directory.GetParent(fileSystemWatcher1.Path).FullName, "remotecache.vdf"), true);
+            File.Copy(Path.Combine(dist, "MyDocuments.dat"),
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Games", "Binding of Isaac Afterbirth+", string.Format("{0}.abp_persistentgamedata1.dat", DateTime.Now.ToString("yyyyMMdd"))), true);
             fileSystemWatcher1.EnableRaisingEvents = true;
             Process.Start("steam://rungameid/250900");
         }
